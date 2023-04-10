@@ -1,0 +1,62 @@
+Problem:
+
+We have 10+ Deals in the System with Linked Accounts and Contacts. (Please add dummy Data to replicate this). Make sure Accounts has multiple Contact and deal are associated with one
+Account but in different Contact
+Please do Deluge Codes for the Following  Scenerio
+
+Generate a Output to show Total no of Deals for each Accounts and Contacts
+Output will be look like this. For simplicity, we are using Account and Contact ID. No Contact/Account Linked is if Contact/Account is Null
+sample_output =  {
+                    "Account ID 1": {
+                        "total_deal": 5,
+                        "Contact id 1": 2,
+                        "Contact id 2" 2,
+                        "No linked Contact: 1
+                    },
+                    "Account ID 2": {
+                        "total_deal": 35,
+                        "Contact id 1": 25,
+                        "Contact id 2" 5,
+                        "No linked Contact: 5
+                    },
+                    "Account ID 3": {
+                        "total_deal": 15,
+                        "Contact id 1": 10,
+                        "Contact id 2" 2,
+                        "No linked Contact: 3
+                    },
+                    "No Linked Account Deal" : 10,
+                    "No Linked Contact Deal" : 2
+                }
+                
+                
+****             
+Solution:
+  
+
+
+deals = zoho.crm.getRecords("Deals");
+
+account_list = List();
+final_list = Map();
+
+for each deal in deals{
+	if(account_list.contains(deal.get("Account_Name").get("id")) != true){
+		account_id = deal.get("Account_Name").get("id");
+		contacts = zoho.crm.getRelatedRecords("Contacts", "Accounts", account_id);
+// 		contact_list = List();
+		account_list.add(account_id);
+		final_list.put(deal.get("Account_Name").get("id"), {
+			"total_deal": 1
+			});
+// 		for each contact in contacts{
+// 			final_list.get()
+// 		}	
+	}
+	else{
+		total_deal = final_list.get(account_id).get("total_deal");
+		final_list.put(account_id, {"total_deal": total_deal + 1});
+	}
+}
+
+return "";
